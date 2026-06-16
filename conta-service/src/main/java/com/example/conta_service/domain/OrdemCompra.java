@@ -15,7 +15,7 @@ public class OrdemCompra {
 
     // construtor com dados
     public OrdemCompra(String cpfCliente, BigDecimal valor) {
-        this.id = UUID.randomUUID().toString(); // Gera um ID único aleatório
+        this.id = UUID.randomUUID().toString(); // gera um ID único aleatório
         this.cpfCliente = cpfCliente;
         this.valor = valor;
     }
