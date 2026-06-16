@@ -4,10 +4,10 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,30 +22,31 @@ public class RabbitMQConfig {
     // 1. Cria a fila
     @Bean
     public Queue ordemCompraQueue() {
-        return new Queue(FILA_ORDEM_COMPRA, true); // fila durável, não some se o RabbitMQ reiniciar
+        return new Queue(FILA_ORDEM_COMPRA, true);
     }
 
-    // 2. Cria a exchange do tipo Direct
+    // 2. Cria o exchange do tipo Direct
     @Bean
     public DirectExchange ordemCompraExchange() {
         return new DirectExchange(EXCHANGE_ORDEM_COMPRA);
     }
 
-    // 3. Faz o binding entre a fila e a exchange usando a routing key
+    // 3. Faz o binding entre a fila e o exchange usando a routing key
     @Bean
     public Binding ordemCompraBinding(Queue ordemCompraQueue, DirectExchange ordemCompraExchange) {
         return BindingBuilder.bind(ordemCompraQueue).to(ordemCompraExchange).with(ROUTING_KEY_ORDEM_COMPRA);
     }
 
+    // 4. Configura o conversor de mensagens para JSON
     @Bean
     public MessageConverter jsonMessageConverter() {
-        return new Jackson2JsonMessageConverter();
+        return new JacksonJsonMessageConverter();
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory, MessageConverter messageConverter) {
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
-        template.setMessageConverter(jsonMessageConverter());
+        template.setMessageConverter(messageConverter);
         return template;
     }
 }
