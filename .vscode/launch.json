@@ -8,6 +8,17 @@
             "mainClass": "com.example.conta_service.ContaServiceApplication",
             "projectName": "conta-service",
             "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=49994 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=conta-service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-CustodiaServiceApplication<custodia-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.custodia_service.CustodiaServiceApplication",
+            "projectName": "custodia-service",
+            "args": "",
             "envFile": "${workspaceFolder}/.env"
         }
     ]
