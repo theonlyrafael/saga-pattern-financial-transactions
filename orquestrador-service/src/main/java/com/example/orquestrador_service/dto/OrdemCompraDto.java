@@ -5,6 +5,7 @@ import java.util.UUID;
 
 public class OrdemCompraDto {
 
+    // id da ordem de compra gerado pelo conta-service, que será usado para rastrear a transação 
     private UUID id;
     private String cpfCliente;
     private BigDecimal valor;
